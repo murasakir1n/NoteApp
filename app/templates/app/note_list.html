@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Все Заметки{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Все Заметки</h1>
+
+<div class="row g-4">
+    {% for note in notes %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card note-card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ note.title }}</h5>
+                    <p class="card-text text-muted small">{{ note.date_created|date:"d.m.Y H:i" }}</p>
+                    <p class="card-text">{{ note.text|truncatewords:20 }}</p>
+                    <a href="{% url 'note-detail' note.id %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col">
+            <p>Нет заметок. Добавьте первую!</p>
+        </div>
+    {% endfor %}
+</div>
+
+<a href="create/" class="btn btn-success mt-4">Добавить новую заметку</a>
+{% endblock %}

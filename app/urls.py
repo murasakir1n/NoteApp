@@ -13,4 +13,7 @@ urlpatterns = [
     path('login/', views.login_view, name = 'login'),
     path('logout/', views.logout_view, name = 'logout'),
     path('login/', views.login_view, name='login'),
+    path('profile/', views.profile_view, name = 'profile'),
+    path('note/edit/<int:note_id>/', views.edit_note, name = 'note-edit'),
+    path('note/delete/<int:note_id>/', views.delete_note, name = 'note-delete')
 ]

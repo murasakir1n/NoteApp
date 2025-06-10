@@ -39,6 +39,16 @@
     {% endblock %}
 </div>
 
+<div class="navbar-nav ms-auto">
+    {% if user.is_authenticated %}
+        <span class="nav-link">Привет, {{ user.username }}!</span>
+        <a href="{% url 'profile' %}" class="nav-link">👤 Профиль</a>
+        <a href="{% url 'logout' %}" class="nav-link">🚪 Выйти</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="nav-link">🔐 Войти</a>
+        <a href="{% url 'register' %}" class="nav-link">📝 Зарегистрироваться</a>
+    {% endif %}
+</div>
 <footer>
     <p>&copy; 2025 Notes App</p>
 </footer>

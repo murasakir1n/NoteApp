@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.core.signals import request_started
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,7 +8,7 @@ from .serializers import NoteSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, NoteForm
 
 
 def note_list(request):
@@ -75,5 +75,49 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('note-list')
+
+
+def profile_view(request):
+    notes = Note.objects.filter(author = request.user)
+    return render(request, 'app/profile.html', {'notes' : notes})
+
+@login_required
+def edit_note(request, note_id):
+    note = get_object_or_404(Note, id = note_id )
+
+    if note.author != request.user:
+        return HttpResponse('У вас нет прав редактировать эту заметку!', status = 403)
+
+    if request.method == 'POST':
+        form = NoteForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            return redirect('note-detail', note_id = note_id)
+    else:
+        form = NoteForm(instance=note)
+    return render(request, 'app/edit_note.html', {'form': form, 'note': note})
+
+@login_required
+def delete_note(request, note_id):
+    note = get_object_or_404(Note, id = note_id)
+
+    if note.author != request.user:
+        return HttpResponse('Нет прав доcтупа!', status=403)
+
+    if request.method == 'POST':
+        note.delete()
+        return redirect('note-list')
+
+    return render(request, 'app/delete_note.html', {'note' : note})
+
+
+
+
+
+
+
+
+
+
 
 

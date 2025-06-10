@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Удалить заметку{% endblock %}
+{% block content %}
+<h3>Вы действительно хотите удалить "{{ note.title }}"?</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">🗑 Удалить</button>
+    <a href="{% url 'note-detail' note.id %}" class="btn btn-secondary">❌ Отмена</a>
+</form>
+{% endblock %}

@@ -6,5 +6,7 @@
 <p class="text-muted">{{ note.date_created }}</p>
 <hr>
 <p>{{ note.text }}</p>
+<a href="{% url 'note-edit' note.id %}" class="btn btn-warning">✏️ Редактировать</a>
+<a href="{% url 'note-delete' note.id %}" class="btn btn-danger">🗑 Удалить</a>
 <a href="{% url 'note-list' %}" class="btn btn-secondary btn-sm">&larr; Назад</a>
 {% endblock %}

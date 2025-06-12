@@ -44,3 +44,6 @@ http://127.0.0.1:8000/
 ## Автор
 
 murasakir1n · GitHub: [@murasakir1n](https://github.com/murasakir1n) 
+
+## Дополнительно
+Вся визуальная часть была создана с помощью ИИ(Qwen)
